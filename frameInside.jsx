@@ -14,9 +14,7 @@
  */
 
 Number.prototype.isBetween = function (min, max) {
-  return (!min && min !== 0) || (!max && max !== 0) || arguments.length < 2
-    ? false
-    : this >= min && this <= max;
+  return arguments.length < 2 ? false : this >= min && this <= max;
 };
 Array.prototype.filter = function (callback) {
   var filtered = [];
@@ -59,9 +57,14 @@ function main() {
     if (list.length) {
       var group = app.activeDocument.groupItems.add();
       group.name = item.name;
-      list.forEach(function (i) {
-        i.move(group, ElementPlacement.INSIDE);
-      });
+      list
+        .filter(function (i) {
+          // Filter out compoundPath children otherwise outlined text can distort
+          return !/compound/i.test(i.parent.typename);
+        })
+        .forEach(function (i) {
+          i.move(group, ElementPlacement.INSIDE);
+        });
       item.move(group, ElementPlacement.INSIDE);
     }
   });
