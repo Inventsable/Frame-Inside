@@ -13,6 +13,11 @@
  * fit into a given surface area.
  */
 
+Number.prototype.isBetween = function (min, max) {
+  return (!min && min !== 0) || (!max && max !== 0) || arguments.length < 2
+    ? false
+    : this >= min && this <= max;
+};
 Array.prototype.filter = function (callback) {
   var filtered = [];
   for (var i = 0; i < this.length; i++)
@@ -38,14 +43,10 @@ function main() {
       var pB = parent.geometricBounds,
         cB = child.geometricBounds;
       return (
-        cB[0] > pB[0] &&
-        cB[0] < pB[2] &&
-        cB[2] > pB[0] &&
-        cB[2] < pB[2] &&
-        cB[1] < pB[1] &&
-        cB[1] > pB[3] &&
-        cB[3] < pB[1] &&
-        cB[3] > pB[3]
+        cB[0].isBetween(pB[0], pB[2]) &&
+        cB[2].isBetween(pB[0], pB[2]) &&
+        cB[1].isBetween(pB[3], pB[1]) &&
+        cB[3].isBetween(pB[3], pB[1])
       );
     }
     var list = get("pageItems").filter(function (i) {
@@ -64,5 +65,6 @@ function main() {
       item.move(group, ElementPlacement.INSIDE);
     }
   });
+  alert("Done with alternate");
 }
 main();
