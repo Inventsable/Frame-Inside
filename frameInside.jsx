@@ -1,6 +1,9 @@
 /**
  * FrameInside.jsx
  *
+ * See before/after screenshots here:
+ * https://github.com/Inventsable/Frame-Inside#readme
+ *
  * Collects any pageItems contained within selected rectangles and groups them with
  * their container, with groups inheriting container / frame / rectangle name.
  *
