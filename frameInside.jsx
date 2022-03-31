@@ -65,6 +65,5 @@ function main() {
       item.move(group, ElementPlacement.INSIDE);
     }
   });
-  alert("Done with alternate");
 }
 main();
